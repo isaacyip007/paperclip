@@ -35,6 +35,7 @@ function summarizeRunFailureForIssueComment(run: StaleRunRow | null): string | n
 export function buildDescription(input: {
   parent: Issue;
   stalledRun: StaleRunRow | null;
+  previousStatus: string;
 }): string {
   const prefix = input.parent.identifier?.split("-")[0] ?? "LIF";
   const sourceIssue = issueUiLink(input.parent.identifier, input.parent.id, prefix);
@@ -53,7 +54,7 @@ export function buildDescription(input: {
     "## Source",
     "",
     `- Source issue: ${sourceIssue}`,
-    `- Previous source status: \`blocked\``,
+    `- Previous source status: \`${input.previousStatus}\``,
     `- Latest retry run: ${runLink}`,
     `- Latest retry status: \`${input.stalledRun?.status ?? "unknown"}\``,
     `- Detected invariant: \`stranded_assigned_issue\``,

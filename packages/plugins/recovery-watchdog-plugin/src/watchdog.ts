@@ -54,7 +54,7 @@ export async function reconcileStaleBlockedParents(ctx: PluginContext): Promise<
       await ctx.issues.create({
         companyId,
         title: `Recover stalled issue ${parent.identifier ?? parent.title}`,
-        description: buildDescription({ parent, stalledRun }),
+        description: buildDescription({ parent, stalledRun, previousStatus: parent.status }),
         // stranded_issue_recovery is a built-in origin kind; the SDK type enforces the
         // plugin: prefix but the server accepts this kind to preserve UX uniformity.
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
