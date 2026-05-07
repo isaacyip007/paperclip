@@ -101,6 +101,13 @@ export function getTestCompanyId(): string {
   return id;
 }
 
+// ── Agents ────────────────────────────────────────────────────────────────────
+
+export async function listAgents(companyId: string): Promise<AgentRef[]> {
+  const res = await apiGet(`/api/companies/${companyId}/agents`);
+  return (await res.json()) as AgentRef[];
+}
+
 // ── Issue CRUD ────────────────────────────────────────────────────────────────
 
 export interface IssueRef {
@@ -115,6 +122,14 @@ export interface IssueDetail extends IssueRef {
   assigneeAgentId: string | null;
   blockedByIssueIds?: string[];
   lastActivityAt?: string | null;
+  originKind?: string | null;
+  originId?: string | null;
+}
+
+export interface AgentRef {
+  id: string;
+  urlKey: string;
+  role: string;
 }
 
 export async function createIssue(
